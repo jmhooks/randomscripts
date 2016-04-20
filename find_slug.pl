@@ -13,7 +13,6 @@ my $result;
 my $token;
 my $rawJson;
 my $dataJson;
-my $state = 0;
 
 #Check for argument
 if($ARGV[0] eq ""){
