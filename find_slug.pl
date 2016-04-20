@@ -15,6 +15,12 @@ my $rawJson;
 my $dataJson;
 my $state = 0;
 
+#Check for argument
+if($ARGV[0] eq ""){
+    print("Usage: ./find_slug.pl <filename>\n");
+    exit;
+}
+
 #Send user and password to obtain authentication token
 my $rawAuth = get("http://msatlanta.turner.com/omneonserver/rest/cnn.bmam?returnFormat=json&domain=BMAM&method=getAuthToken&username=srv_core_api&password=fd908ew3qolkj4g8");
 my $authJson = decode_json($rawAuth);
