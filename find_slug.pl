@@ -39,6 +39,7 @@ while( my $line = <$info>){
     
     #Strip each line of any extra characters (.mxf mostly)
     $line =~ s/[^0-9 ]//g;
+    $line = substr($line,0,8);
     
     #HTTP request for authentication token and slug name within the try block
     try{
