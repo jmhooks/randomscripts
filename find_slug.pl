@@ -14,7 +14,6 @@ my $token;
 my $rawJson;
 my $dataJson;
 
-#Check for argument
 if($ARGV[0] eq ""){
     print("Usage: ./find_slug.pl <filename>\n");
     exit;
@@ -27,11 +26,15 @@ $token = $authJson->{'response'}{'payload'}{'authenticationToken'};
 print "Authentication token: " . $token . "\n";
 select(undef, undef, undef, 0.2);
 
+
+
 #Take in filename from first argument contained MS ID's
 my $file = $ARGV[0];
-open my $info, $file or die "Could not open $file: $!";
+open my $info, $file or die "Could not open $file";
 
 #Go through each line of the file and send a request using the authentication token and MS ID, parse the JSON, and print out the slug information
+printf "\n%-11s %-11s %-15s %-25s\n","MS ID","Category","Type","Slug";
+print "--------------------------------------------------------------\n";
 while( my $line = <$info>){
     
     #Strip each line of any extra characters (.mxf mostly)
@@ -58,16 +61,15 @@ while( my $line = <$info>){
            $result = $dataJson->{'response'}{'payload'}{'slug'};
         }
         
-        #Print the slug output here
-        print $line . " -- " . $result . "\n";
+        #Print the asset information output here
+        printf "%-11s %-11s %-15s %-25s\n",$line,$dataJson->{'response'}{'payload'}{'category'}{'longName'},$dataJson->{'response'}{'payload'}{'type'}{'longName'},$result;
     } 
     
     #Catch when a utf-8 encoding error is received and print an error message regarding it
     catch{
-        print $line . " -- !! ERROR: Bad character in request. Cannot obtain slug !!\n";
+        printf "%-11s %-11s %-15s %-25s\n",$line," "," ","!! ERROR: Bad character in output... Cannot obtain information !!";
     };
 
     #Delay 0.1 seconds
     select(undef, undef, undef, 0.1);
 }
-
