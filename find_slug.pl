@@ -29,7 +29,7 @@ select(undef, undef, undef, 0.2);
 
 #Take in filename from first argument contained MS ID's
 my $file = $ARGV[0];
-open my $info, $file or die "Coule not open $file: $!";
+open my $info, $file or die "Could not open $file: $!";
 
 #Go through each line of the file and send a request using the authentication token and MS ID, parse the JSON, and print out the slug information
 while( my $line = <$info>){
